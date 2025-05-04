@@ -1,6 +1,7 @@
-import configdb from '../config/db.configdb.js';
+import configdb from '../config/db.config.js';
 import { Sequelize } from 'sequelize';
 import User from './User.js';
+import pg from "pg";
 
 const sequelize = new Sequelize(
     configdb.database,
@@ -10,6 +11,7 @@ const sequelize = new Sequelize(
         host:configdb.host,
         dialect: configdb.dialect,
         port: configdb.port,
+        dialectModule: pg,
         pool: {
         mas: configdb.pool.max,
         min: configdb.pool.min,
