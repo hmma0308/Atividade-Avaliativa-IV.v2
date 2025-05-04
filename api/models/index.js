@@ -13,11 +13,11 @@ const sequelize = new Sequelize(
         port: configdb.port,
         dialectModule: pg,
         pool: {
-        mas: configdb.pool.max,
-        min: configdb.pool.min,
-        acquire: configdb.pool.acquire,
-        idle: configdb.pool.idle,
-        evict: configdb.pool.evict,
+            mas: configdb.pool.max,
+            min: configdb.pool.min,
+            acquire: configdb.pool.acquire,
+            idle: configdb.pool.idle,
+            evict: configdb.pool.evict,
         },
     }
 );

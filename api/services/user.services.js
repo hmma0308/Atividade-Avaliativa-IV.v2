@@ -28,7 +28,7 @@ const login = async (credentials) => {
     const isMatch = await bcrypt.compare(credentials.password, user.password);
     if (!isMatch) return { code: 'Login_Bad_Password', message: 'Invalid password' };
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { 
+    const token = jwt.sign({ id: db.users._id }, process.env.JWT_SECRET, { 
         expiresIn: '1h' 
     });
     

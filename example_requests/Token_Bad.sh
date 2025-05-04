@@ -1,3 +1,3 @@
 curl --request GET \
-  --url 'https://atividade-avaliativa-iv-v2-hugos-projects-b6728154.vercel.app/secureExampleRoute/' \
+  --url 'http://localhost:3000/secureExampleRoute/' \
   --header 'Authorization: Bearer <Token>'

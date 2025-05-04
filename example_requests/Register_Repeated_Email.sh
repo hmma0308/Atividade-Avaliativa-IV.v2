@@ -1,6 +1,6 @@
 # rodar duas vezes
 curl --request POST \
-  --url https://atividade-avaliativa-iv-v2-hugos-projects-b6728154.vercel.app/users/register \
+  --url http://localhost:3000/users/register \
   --header 'Content-Type: application/json' \
   --data '{
     "username": "differentuser",
