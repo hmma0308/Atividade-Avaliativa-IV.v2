@@ -1,19 +1,13 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import db from '../models/index.js';
-import { jwtConfig } from '../config/db.config.js';
 
 const registerUser = async (userData) => {
     const { username, password, email } = userData;
 
-    const existingUser = await db.users.findOne({ 
-        where: { email } 
-    });
+    const existingUser = await db.users.findOne({ email });
     if (existingUser) {
-        throw { 
-            code: 'Register_Repeated_Email', 
-            message: 'Email already exists' 
-        };
+        throw { code: 11000 };
     }
     
     const salt = await bcrypt.genSalt(10);
@@ -27,35 +21,22 @@ const registerUser = async (userData) => {
 };
 
 const login = async (credentials) => {
-    try {
-        const user = await db.users.findOne({ 
-            where: { 
-              username: credentials.username 
-            } 
-          });
+    const user = await db.users.findOne({ username: credentials.username });
 
-        if (!user) return { code: 'Login_Bad_Email', message: 'User not found' };
-        
-        const isMatch = await bcrypt.compare(credentials.password, user.password);
-        if (!isMatch) return { code: 'Login_Bad_Password', message: 'Invalid password' };
+    if (!user) return { code: 'Login_Bad_Email', message: 'User not found' };
+    
+    const isMatch = await bcrypt.compare(credentials.password, user.password);
+    if (!isMatch) return { code: 'Login_Bad_Password', message: 'Invalid password' };
 
-        // Updated JWT signing part:
-        const token = jwt.sign(
-            { id: user.id }, 
-            jwtConfig.secret, 
-            { expiresIn: jwtConfig.expiresIn }
-        );
-
-        return { 
-            code: 'Login_Successful', 
-            message: 'Login successful', 
-            token 
-        };
-    } catch (error) {
-        console.error("Login service error:", error);
-        throw error;
-    }
-
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { 
+        expiresIn: '1h' 
+    });
+    
+    return { 
+        code: 'Login_Successful', 
+        message: 'Login successful', 
+        token 
+    };
 };
 
 export default { registerUser, login };
