@@ -1,5 +1,5 @@
 curl --request POST \
-  --url http://localhost:3000/users/login \
+  --url https://atividade-avaliativa-iv-v2-hugos-projects-b6728154.vercel.app/users/login \
   --header 'Content-Type: application/json' \
   --data '{
     "username": "newuser",
