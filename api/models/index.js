@@ -12,12 +12,6 @@ const sequelize = new Sequelize(
         dialect: configdb.dialect,
         port: configdb.port,
         dialectModule: pg,
-        dialectOptions: {
-            ssl: {
-                require: true,
-                rejectUnauthorized: false
-            },
-        },
         pool: {
         max: configdb.pool.max,
         min: configdb.pool.min,
